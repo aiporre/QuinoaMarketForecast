@@ -17,7 +17,7 @@ and a xml output or the same way around.
 
 import pandas as pd
 import matplotlib.pyplot as plt
-
+import numpy as np
 
 df =  pd.read_csv('data/BCB-3105.csv')
 print df.head()
@@ -55,14 +55,28 @@ print df.head()
 
 ###########
 # visualization
+
+# one column
 ts = df.cumsum()
 print "Plotting " + str(ts)
-ts.plot()
+df.plot()
 plt.title("Exports from Bolivia to Brazil")
 plt.xlabel("date (End of month)")
 plt.ylabel("Amount of exports")
 plt.show()
 
+# One column
+ts = pd.Series(np.random.randn(1000), index=pd.date_range('1/1/2000', periods=1000))
+ts = ts.cumsum()
+ts.plot()
+
+
+# more than one column
+df = pd.DataFrame(np.random.randn(1000, 4), index=ts.index, columns=list('ABCD'))
+print df.head()
+df = df.cumsum()
+plt.figure(); df.hist()
+plt.show()
 
 
 
