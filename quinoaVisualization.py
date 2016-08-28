@@ -25,9 +25,9 @@ print "Peru production (first ten years) " + str(np.transpose(per[0:10,:]))
 print "Ecuador production (first ten years) " + str(np.transpose(ecu[0:10,:]))
 
 ### plotting
-# qp_bol.plot(subplots = True)
-# qp_per.plot(subplots = True)
-# qp_ecu.plot(subplots = True)
+qp_bol.plot(subplots = True)
+qp_per.plot(subplots = True)
+qp_ecu.plot(subplots = True)
 
 
 plt.figure(4)
@@ -40,16 +40,3 @@ ecuador_fig, = plt.plot(ecu,'g', label = 'Ec')
 plt.legend([bolivia_fig, peru_fig, ecuador_fig], ['Bolivia','Peru','Ecuador'], bbox_to_anchor=(0.3, 1))
 plt.show()
 
-
-# fig = plt.figure()
-# ax1 = fig.add_subplot(311)
-# ax1.
-# ax1 = fig.add_subplot(311)
-# ax1.xcorr(x, y, usevlines=True, maxlags=50, normed=True, lw=2)
-# ax1.grid(True)
-# ax1.axhline(0, color='black', lw=2)
-#
-# ax2 = fig.add_subplot(212, sharex=ax1)
-# ax2.acorr(x, usevlines=True, normed=True, maxlags=50, lw=2)
-# ax2.grid(True)
-# ax2.axhline(0, color='black', lw=2)
