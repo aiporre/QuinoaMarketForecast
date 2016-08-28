@@ -38,7 +38,7 @@ print(df.head())
 
 ## select columns
 print(df['Sizes'])
-print(df.Sizes) # easy no 
+print(df.Sizes) # easy but is needed to avoid the use of spaces in labels
 print df[['Sizes','Densities']]
 
 ## Dataframe convertions

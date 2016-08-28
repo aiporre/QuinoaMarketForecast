@@ -61,6 +61,10 @@ print "Dataframe ecuador: " + str(qp_ecu.head())
 #     df  = quandl.get(Countries[i], authtoken = api_key)
 
 
+####################################
+#        Visualization             #
+####################################
+
 
 
 
