@@ -8,7 +8,7 @@ df1 = pd.DataFrame({'HPI':[80,85,88,85],
                    index = [2001, 2002, 2003, 2004])
 
 df2 = pd.DataFrame({'HPI':[80,85,88,85],
-                    'Int_rate':[2, 3, 2, 2],
+                    'Int_rate' : [2, 3, 2, 2],
                     'US_GDP_Thousands':[50, 55, 65, 55]},
                    index = [2005, 2006, 2007, 2008])
 
@@ -74,6 +74,76 @@ print "df1 and df2 merged over a list of indexes HP1 an Int_rate"
 print pd.merge(df1,df2, on = ['HPI','Int_rate'])
 print "df1 and df2 merged over a list of indexes HP1 an Int_rate"
 print pd.merge(df1,df2, on = ['HPI','Int_rate',"US_GDP_Thousands"])
+
+# Joining
+
+# First with reassign the index so the for dataframes df1 and df3
+
+df1.set_index('HPI', inplace = True)
+df3.set_index('HPI', inplace = True)
+joined  = df1.join(df3)
+
+print "Joined df1 and df3 with new index assignation"
+print joined
+# we must notice that we have some data replication
+# because when the joining is performed then if the index is the
+# same but the data is differnet it will consider that as new information
+# Lets explore if index are complete different
+
+df1_1 = pd.DataFrame({'Year': [2001, 2002, 2003, 2004],
+                    'Int_rate': [2, 3, 2, 2],
+                    'US_GDP_Thousands': [50, 55, 65, 55]})
+
+df3_1 = pd.DataFrame({'Year': [2005, 2006, 2007, 2008],
+                    'Unemployment': [7, 8, 9, 6],
+                    'Low_tier_HPI': [50, 52, 50, 53]})
+df1_1.set_index('Year', inplace=True)
+df3_1.set_index('Year', inplace=True)
+print "Join with different indexes"
+print df1_1.join(df3_1)
+
+# We see that if the index is not in the dataframe the it just doesn't joins the new information
+# Let explore that by putting just one different key in each side
+df1_2 = pd.DataFrame({'Year': [2001, 2002, 2003, 2004],
+                      'Int_rate': [2, 3, 2, 2],
+                      'US_GDP_Thousands': [50, 55, 65, 55]})
+
+df3_2 = pd.DataFrame({'Year': [2001, 2002, 2003, 2005],
+                      'Unemployment': [7, 8, 9, 6],
+                      'Low_tier_HPI': [50, 52, 50, 53]})
+df1_2.set_index('Year', inplace=True)
+df3_2.set_index('Year', inplace=True)
+print "Join with one different index in each side"
+print df1_2.join(df3_2)
+
+# We can solve that by merging and joinig
+df1_3 = pd.DataFrame({'Year': [2001, 2002, 2003, 2004],
+                      'Int_rate': [2, 3, 2, 2],
+                      'US_GDP_Thousands': [50, 55, 65, 55]})
+
+df3_3 = pd.DataFrame({'Year': [2001, 2002, 2003, 2005],
+                      'Unemployment': [7, 8, 9, 6],
+                      'Low_tier_HPI': [50, 52, 50, 53]})
+merged_3 = pd.merge(df1_3, df3_3, on='Year')
+merged_3.set_index("Year", inplace=True)
+print "Merged types: inner(deafault)"
+print merged_3
+merged_3 = pd.merge(df1_3, df3_3, on='Year', how='outer')
+merged_3.set_index("Year", inplace=True)
+print "Merged types: inner(outer)"
+print merged_3
+
+merged_3 = pd.merge(df1_3, df3_3, on='Year', how='left')
+merged_3.set_index("Year", inplace=True)
+print "Merged types: inner(left)"
+print merged_3
+
+
+# main focus of merge is mix in column
+# join index are important, and respect it existente
+# DF similar merge with column and dnt care about the indexes
+# DF may no use contatenation
+
 
 
 
