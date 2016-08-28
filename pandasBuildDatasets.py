@@ -29,7 +29,7 @@ Countries = []
 for q in quinoaProcucer:
     Countries.append("UFAO/CR_QNOA_" + str(q)[0:3].upper())
 # put your own apikey from quandl
-api_key = open('myApiKey.txt','r').read()
+api_key = open('data/myApiKey.txt','r').read()
 
 print Countries[0]
 df1 = quandl.get(Countries[0], authtoken=api_key)

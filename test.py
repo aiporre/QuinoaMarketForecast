@@ -1,5 +1,19 @@
-notes = []
-for i in range(0,11):
-    for j in range(0,11):
-        notes.append(30 * (0.5*(i+j)/10))
-print sorted(notes)
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+with open('data/100.dat','r') as f:
+    next(f)
+    df = pd.DataFrame(l.rstrip().split() for l in f)
+print df.head()
+print '===================================================='
+myarray = np.fromfile('data/100.dat',dtype=float)
+print np.shape(myarray)
+myarray = np.transpose(myarray)
+for a  in myarray:
+    if a == np.NAN:
+        print a
+
+plt.plot(myarray.astype(int)[1:10])
+plt.title("signal")
+plt.show()
