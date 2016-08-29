@@ -33,7 +33,7 @@ def get_from_quandl():
     quinoaProducers = {}
 
     for country in countries:
-        print country
+        print country[-3:]
         df = quandl.get(country,authtoken=api_key)
         quinoaProducers[country] = df
     # method 1 python pockiing
@@ -42,7 +42,21 @@ def get_from_quandl():
     pickle_out.close()
 
     #method2 pandas pickling
-    # pd.DataFrame(quinoaProducers).to_pickle('data/quinoa_producers2.pickle')
+    main_df = pd.DataFrame()
+    for c in countries:
+        df = quinoaProducers[c]
+        column_names = []
+        for name in df.columns:
+            name = name+"_"+c[-3:]
+            column_names.append(name)
+        print column_names
+        df.columns = column_names
+        if main_df.empty:
+            main_df = df
+        else:
+            main_df = main_df.join(df)
+    print main_df.head()
+    pd.DataFrame(main_df).to_pickle('data/quinoa_producers2.pickle')
 
     return quinoaProducers
 
@@ -52,15 +66,15 @@ try:
     pickle_in  = open('data/quinoa_producers1.pickle','rb')
     qp_collection1 = pk.load(pickle_in)
     # Method 2: pandas pickling
-    # qp_collection2 = pd.read_pickle('data/quinoa_producers2.pickle')
+    qp_collection2 = pd.read_pickle('data/quinoa_producers2.pickle')
 except:
     qp_collection1 = get_from_quandl()
-    # qp_collection2 = qp_collection1
+    qp_collection2 = qp_collection1
 
 print 'Python pickling collection'
 for producer in qp_collection1:
     print producer
     print qp_collection1[producer].head()
-# print " Pandas pickling collection"
-# print qp_collection2
+print " Pandas pickling collection"
+print qp_collection2
 
