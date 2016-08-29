@@ -27,8 +27,18 @@ print gold_resampled.head()
 print "Ploting"
 fig = plt.figure()
 ax1 = plt.subplot2grid((1,1), (0,0))
+
+
+print " dealing with NaN data"
+
+gold.columns = ['daily']
+
+df  =  gold.join(gold_resampled)
+print df.head(10)
+print "NaN cleared"
+print df.dropna(how = 'all', inplace= True)
+
 gold.plot(ax = ax1)
 gold_resampled.plot(color = 'k', ax = ax1)
 plt.legend().remove()
 plt.show()
-
