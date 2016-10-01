@@ -24,8 +24,9 @@ def get_producers_list():
     return Countries[1:4]
 
 
-def get_from_quandl():
+def get_from_quandl(how = "dictionary"):
     # qp is dataframe from data from a web page
+
     countries = get_producers_list()
 
     # put your own apikey from quandl
@@ -66,8 +67,27 @@ def get_from_quandl():
     print main_df.head()
     # pickling of the second dataframe
     pd.DataFrame(main_df).to_pickle('data/quinoa_producers2.pickle')
+    if how == "dataframe":
+        return main_df
+    else:
+        return quinoaProducers
+def as_dataframe():
+    how = "dataframe"
+    try:
+        qp_collection = pd.read_pickle('data/quinoa_producers2.pickle')
+    except:
+        qp_collection = get_from_quandl(how)
+    return qp_collection
 
-    return quinoaProducers
+def as_dictionary():
+    how = "dictionary"
+    try:
+        pickle_in = open('data/quinoa_producers1.pickle', 'rb')
+        qp_collection = pk.load(pickle_in)
+    except:
+        qp_collection = get_from_quandl(how)
+    return qp_collection
+
 
 if __name__ == "__main__":
     try:
