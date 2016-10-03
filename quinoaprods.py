@@ -56,7 +56,6 @@ def get_from_quandl(how = "dictionary"):
         for name in df.columns:
             name = name+"_"+c[-3:]
             column_names.append(name)
-        print column_names
         # set new names to dataframes
         df.columns = column_names
         # joint into a big data-frame
@@ -64,7 +63,6 @@ def get_from_quandl(how = "dictionary"):
             main_df = df
         else:
             main_df = main_df.join(df)
-    print main_df.head()
     # pickling of the second dataframe
     pd.DataFrame(main_df).to_pickle('data/quinoa_producers2.pickle')
     if how == "dataframe":
